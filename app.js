@@ -17,30 +17,27 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 var authRouter = require('./routes/auth');
-app.use
+var packageRouter = require('./routes/package');
 app.use('/auth', authRouter);
+app.use('/', packageRouter);
 
 app.get('/signup', (req, res) => {
   res.render('signup');
 });
-
-// app.get('/', (req, res) => {
-//   res.render('index');
-// });
-
-app.get('/dashboard', (req, res) => {
-  var mascots = [
-    { name: 'Sammy', organization: "DigitalOcean", birth_year: 2012 },
-    { name: 'Tux', organization: "Linux", birth_year: 1996 },
-    { name: 'Moby Dock', organization: "Docker", birth_year: 2013 }
-  ];
-  var tagline = "No programming concept is complete without a cute animal mascot.";
-
-  res.render('dashboard', {
-    mascots: mascots,
-    tagline: tagline
-  });
+app.get('/index', (req, res) => {
+  res.render('index');
 });
+
+app.get('/package', (req, res) => {
+  res.render('partials/package');
+});
+app.get('/staff', (req, res) => {
+  res.render('partials/staff');
+});
+app.get('/booking', (req, res) => {
+  res.render('partials/staff');
+});
+
 // res.render('dashboard');
 // });
 
@@ -57,7 +54,7 @@ app.get('/', (req, res) => {
     res.send(`You have visited this page ${req.session.views} times`);
   } else {
     req.session.views = 1;
-    res.render('index');
+    res.render('login');
   }
 });
 
@@ -65,19 +62,4 @@ app.listen(5000, () => {
   console.log(`Server is running on http://localhost:${5000}`);
 });
 
-// app.post('/signup', (req, res) => 
-// Facebook  ----> ask for mobile, password
-// Aakash: -----> Submit click
-// facebook ----> please enter all fields
-// Akash  ---> enter email, enter password
-// Facebook -----> Chaeck credentials from db by mobile number
-// Facebook -----> mobile number not exist?
-// Facebook ----> Please create an account first
-// Facebook ----> if mobile number found
-// Facebook ----f> acebook will validate password
-// facebook ----> password is worng
-// akash ----> new correct password
-// facebook ---> mobile , password
-// facebook ---> create session
-// facebook ----> redirect to main page
 //https://www.figma.com/file/5mMBPPZEakGtd5QANwSHQH/Untitled?type=whiteboard&node-id=0%3A1&t=jH2r426VKUCovNRg-1

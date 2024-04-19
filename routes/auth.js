@@ -13,7 +13,6 @@ auth.post('/login', async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Compare hashed password
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch) {
             return res.status(401).json({ message: "Invalid credentials" });
@@ -59,7 +58,6 @@ auth.post('/signup', async (req, res) => {
             return res.status(400).json({ message: 'Email already exists' });
         }
 
-        // Hash the password using bcrypt
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         const newUser = new User({ firstname, lastname, code, mobile, email, password: hashedPassword });
@@ -74,4 +72,3 @@ auth.post('/signup', async (req, res) => {
 
 
 module.exports = auth;
-//module.exports = signup;
